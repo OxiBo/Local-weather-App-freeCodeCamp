@@ -19,70 +19,141 @@ $(document).ready(function() {
 		   	dataType: 'json'
 		   })
 		   .done(function(data) {
-            console.log(data);
-            // set background image depending on temperature and weather description 
-		   	switch (true) {
+
+             // set background image depending on temperature and weather description 
+            function changeBackground(urlImage){
+                $background.css('background-image', 'url(' + urlImage + ')');
+            };
+
+            var urlImage = [
+            'https://s9.postimg.org/3udx2fodr/crop.jpg',//winter clouds
+            'https://s9.postimg.org/3o4tcy75r/7281.jpg',//winter snow
+            'https://s9.postimg.org/gr0fwg2lb/a6bde9af0e70ece8f7d78d1049e16204.jpg',//winter clear
+            'https://s9.postimg.org/4k1ask967/mountain-background-clouds-1080x608.jpg',//spring clouds
+            'https://s9.postimg.org/xk0amj9j3/spring_rain.gif',//spring rain
+            'https://thumbsnap.com/i/dDjiMvMh.jpg',//spring clear
+            'https://s9.postimg.org/wbcf0gub3/sunshine-5120x2880-path-landscape-4k-5170.jpg',//summer clouds
+            'https://s9.postimg.org/8ufyo1bnj/beautiful-rain-wallpapers-5.jpg',//summer rain
+            'https://s9.postimg.org/leb3bpf9b/colza-field-france-1080_P-wallpaper-middle-size.jpg',//summer clear
+            'https://thumbsnap.com/i/zxDixc9T.gif',//autumn rain
+            'https://thumbsnap.com/i/IneJP0X0.jpg',//autumn clouds
+            'https://thumbsnap.com/i/2148z0lQ.jpg',//autumn clear
+            'https://s9.postimg.org/6enc1ndhb/deafult.jpg'//defualt
+            ];
+
+
+            switch (true) {
                 // winter clouds
-		   		case (data.main.temp <= 0 && data.weather[0].description.indexOf('clouds') >= 0):
-		   		$background.css('background-image', 'url(' + 'https://s9.postimg.org/3udx2fodr/crop.jpg' + ')');
-		   		break;
+                case (data.main.temp <= 0 && (data.weather[0].id >= 801 && data.weather[0].id <= 804)):
+                changeBackground(urlImage[0]);
+                
+                break;
+
                 // winter snow
-                case (data.main.temp <= 0 && data.weather[0].description.indexOf('snow') >= 0):
-                $background.css('background-image', 'url(' + 'https://s9.postimg.org/3o4tcy75r/7281.jpg' + ')');
+                case (data.main.temp <= 0 && (data.weather[0].id >= 600 && data.weather[0].id <= 622)):
+                changeBackground(urlImage[1]);
                 break;
+
                 // winter clear
-                case (data.main.temp <= 0 && data.weather[0].description.indexOf('clear') >= 0):
-		   		case (data.main.temp <= 0):
-		   		$background.css('background-image', 'url(' + 'https://s9.postimg.org/gr0fwg2lb/a6bde9af0e70ece8f7d78d1049e16204.jpg' + ')');
-		   		break;
+                case (data.main.temp <= 0 && data.weather[0].id == 800):
+                case (data.main.temp <= 0):
+                changeBackground(urlImage[2]);
+                break;
+
                 // spring clouds
-		   		case ((data.main.temp > 15 &&  data.main.temp < 24) && data.weather[0].description.indexOf('clouds') >= 0):
-		   		$background.css('background-image', 'url(' + 'https://s9.postimg.org/4k1ask967/mountain-background-clouds-1080x608.jpg' + ')');
-		   		break;
+                case ((data.main.temp > 15 &&  data.main.temp < 24) && (data.weather[0].id >= 801 && data.weather[0].id <= 804)):
+                changeBackground(urlImage[3]);
+                break;
+
                 // spring rain
-		   		case ((data.main.temp > 15 &&  data.main.temp < 24) && data.weather[0].description.indexOf('rain') >=0 ):
-                $background.css('background-image', 'url(' + 'https://s9.postimg.org/xk0amj9j3/spring_rain.gif' + ')');
+                case ((data.main.temp > 15 &&  data.main.temp < 24) && (data.weather[0].id >= 200 && data.weather[0].id <= 531)):
+                changeBackground(urlImage[4]);
                 break;
+
                 // spring clear
-                case ((data.main.temp > 15 &&  data.main.temp < 24)  && data.weather[0].description.indexOf('clear') >=0):
+                case ((data.main.temp > 15 &&  data.main.temp < 24)  && data.weather[0].id == 800):
                 case (data.main.temp > 15 &&  data.main.temp < 24):
-                $background.css('background-image', 'url(' + 'https://thumbsnap.com/i/dDjiMvMh.jpg' + ')');
+                changeBackground(urlImage[5]);
                 break;
+
                 // summer clouds
-                case (data.main.temp > 24  && data.weather[0].description.indexOf('clouds') >=0 ):
-                $background.css('background-image', 'url(' + 'https://s9.postimg.org/wbcf0gub3/sunshine-5120x2880-path-landscape-4k-5170.jpg' + ')');
+                case (data.main.temp > 24  && (data.weather[0].id >= 801 && data.weather[0].id <= 804)):
+                changeBackground(urlImage[6]);
                 break;
+
                 // summer rain
-                case (data.main.temp > 24  && data.weather[0].description.indexOf('rain') >= 0):
-                $background.css('background-image', 'url(' + 'https://s9.postimg.org/8ufyo1bnj/beautiful-rain-wallpapers-5.jpg' + ')');
+                case (data.main.temp > 24  && (data.weather[0].id >= 200 && data.weather[0].id <= 531)):
+                changeBackground(urlImage[7]);
                 break;
+
                 // summer clear
-                case (data.main.temp > 24  && data.weather[0].description.indexOf('clear') >= 0):
+                case (data.main.temp > 24  && data.weather[0].id == 800):
                 case (data.main.temp > 24):
-                $background.css('background-image', 'url(' + 'https://s9.postimg.org/leb3bpf9b/colza-field-france-1080_P-wallpaper-middle-size.jpg' + ')');
+                changeBackground(urlImage[8]);
                 break;
+
                 // autumn rain
-                case ((data.main.temp < 15 && data.main.temp > 0)  && data.weather[0].description.indexOf('rain') >=0):
-                $background.css('background-image', 'url(' + 'https://thumbsnap.com/i/zxDixc9T.gif' + ')');
+                case ((data.main.temp < 15 && data.main.temp > 0)  && (data.weather[0].id >= 200 && data.weather[0].id <= 531)):
+                changeBackground(urlImage[9]);
                 break;
+
                 // autumn clouds
-                case ((data.main.temp < 15 && data.main.temp > 0)  && data.weather[0].description.indexOf('clouds') >=0):
-                $background.css('background-image', 'url(' + 'https://thumbsnap.com/i/IneJP0X0.jpg' + ')');
+                case ((data.main.temp < 15 && data.main.temp > 0)  && (data.weather[0].id >= 801 && data.weather[0].id <= 804)):
+               changeBackground(urlImage[10]);
                 break;
+
                 // autumn clear
-                case ((data.main.temp < 24 && data.main.temp > 0) && data.weather[0].description.indexOf('clear') >=0):
+                case ((data.main.temp < 24 && data.main.temp > 0) && data.weather[0].id == 800):
                 case (data.main.temp < 24 && data.main.temp > 0):
-                $background.css('background-image', 'url(' + 'https://thumbsnap.com/i/2148z0lQ.jpg' + ')');
+                changeBackground(urlImage[11]);
                 break;
 
-		   		default:
-		   		$background.css('background-image', 'url(' + 'https://s9.postimg.org/6enc1ndhb/deafult.jpg' + ')');
-		   	}
+                default:
+                changeBackground(urlImage[12]);
+            }
+            
+            // toggle between Celcsius and Fahrenheit
+            var F = false;
+            function convert(C, F) {
+            if(F) return ((C * 1.8) + 32).toFixed(2);
+            return C.toFixed(1);
+            }
 
-            $temp.text(data.main.temp.toFixed(1));
-            $degrees.text("\u2103");
+            var C = convert(data.main.temp, F); 
+            $temp.text(C);
+            $degrees.text('\u2103');
+            
+            
+            $('#degrees').on('click', function() {
+               F = !F;
+               $temp.text(convert(data.main.temp, F));
+               if(F) {
+                  $degrees.text('\u2109');
+               }
+               else {
+                  $degrees.text('\u2103');
+               }
+            });
+
           
+            //$('#location').text(data.name + ', ' + data.sys.country);
+            var geolocationTimeout = setTimeout(function() {
             $('#location').text(data.name + ', ' + data.sys.country);
+            }, 1000);
+
+            $.ajax({
+                url: 'https://freegeoip.net/json',
+                data: {
+                    format: 'jsonp'
+                },
+                dataType: 'jsonp'
+                })
+                 .done(function(location) {
+                    $('#location').text(location.city + ', ' + location.region_name + ', ' + location.country_code);
+                    clearTimeout(geolocationTimeout);
+                 })
+
+
             $('#icon').attr('src', data.weather[0].icon);
             $('#description').text(data.weather[0].description);
             $('#windSpeed').text('WS ' + (data.wind.speed * 1.94384449).toFixed(2) +  ' knots');
@@ -115,16 +186,5 @@ $(document).ready(function() {
             break;
     };
    };
-  
-   $('a').on('click', function() {
-   	if($degrees.text() === '\u2103') {
-   		$temp.text((($temp.text()*1.8) + 32).toFixed(2));
-   		$degrees.text('\u2109');
-   	}
-   	else {
-   		$temp.text((($temp.text() - 32) * 5 / 9).toFixed(1));
-   		$degrees.text('\u2103');
-   	}
-   });
    
 })
